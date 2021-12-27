@@ -1,0 +1,1073 @@
+require(4948669185)()
+local player=game:service'Players'.LocalPlayer
+local char=player.Character
+local mouse=player:GetMouse()
+local tpressed = false
+local tpressed2 = 0
+local epressed = false
+local epressed2 = 0
+local ra = char['Right Arm']
+local la = char['Left Arm']
+local v3 = Vector3.new
+local cfn = CFrame.new
+local ang = CFrame.Angles
+local mr = math.rad
+local canfire = false
+local camera = game.Workspace.CurrentCamera
+local tor = char.Torso
+local Ammo = 99999
+local firin = false
+Smp = "SmoothPlastic"
+Sm = "Smooth"
+function makepart(parent,color,size,name,anchored,cancollide)
+local part = Instance.new("Part")
+part.Parent = parent
+part.Size = size
+part.Name = name
+part.Anchored = anchored
+part.CanCollide = cancollide
+part.TopSurface = "Smooth"
+part.BottomSurface = "Smooth"
+part.BrickColor = BrickColor.new(color)
+part:BreakJoints()
+return part 
+end
+function weld(p0,p1,c0)
+        local w=Instance.new("Weld",p0)
+        w.Part0=p0
+        w.Part1=p1
+        w.C0=c0
+        return w
+end
+
+---Clothing------------------------------------------------------
+if char:findFirstChild("Shirt") then
+	char.Shirt:Remove()
+end
+
+if char:findFirstChild("Pants") then
+	char.Pants:Remove()
+end
+
+if char:findFirstChild("Shirt Graphic") then
+	char["Shirt Graphic"]:Remove()
+end
+
+if char.Torso:findFirstChild("roblox") then
+	char.Torso.roblox:Remove()
+end
+
+ local Shirt = Instance.new("Shirt",char)
+ local Pants = Instance.new("Pants",char)
+ Shirt.ShirtTemplate = "http://www.roblox.com/asset/?id=15947510"
+ Pants.PantsTemplate = "http://www.roblox.com/asset/?id=32389160"
+-----------------------------------------------------------------
+
+---Hat-----------------------------------------------------------------------------
+for _,v in pairs(char:GetChildren()) do if v.ClassName=="Hat" then v:remove() end end
+
+local hat = Instance.new("Part",char.Head)
+hat.Size = Vector3.new(2, 0.8, 1)
+hat.Locked = true
+hat.FormFactor = "Plate"
+hat.Material = "Metal"
+hat.TopSurface = Sm
+hat.BottomSurface = Sm
+hat.Name = "Helmet"
+hat.Position = Vector3.new(0,-.5,0)
+hat.Transparency = 0.005
+local hatmesh = Instance.new("SpecialMesh",hat)
+hatmesh.MeshType="FileMesh"
+hatmesh.MeshId = "http://www.roblox.com/asset/?id=24102128"
+hatmesh.TextureId = "http://www.roblox.com/asset/?id=71541827"
+hatmesh.Scale = Vector3.new(1.05, 1.25, 1.05)
+weld(hat, char.Head, CFrame.new(0,-.30,.15)*CFrame.Angles(math.rad(0),0,0))
+
+char.Head.face.Texture = "http://www.roblox.com/asset/?id=187335055"
+-------------------------------------------------------------------------------------------
+
+---Backpack---
+local m1 = Instance.new("Model")
+m1.Name = "Backpack"
+p1 = Instance.new("Part", m1)
+p1.BrickColor = BrickColor.new("Dark stone grey")
+p1.FormFactor = Enum.FormFactor.Plate
+p1.Size = Vector3.new(2, 2, 1)
+p1.CFrame = CFrame.new(4.59994984, 2.69995689, -11.1000042, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+p1.Anchored = false
+p1.CanCollide = true
+p1.BottomSurface = Enum.SurfaceType.Smooth
+p1.TopSurface = Enum.SurfaceType.Smooth
+b1 = Instance.new("SpecialMesh", p1)
+b1.MeshType = Enum.MeshType.Brick
+b1.Name = "Mesh"
+b1.Scale = Vector3.new(1.00999999, 1, 1.10000002)
+p2 = Instance.new("Part", m1)
+p2.BrickColor = BrickColor.new("Earth green")
+p2.Name = "part"
+p2.FormFactor = Enum.FormFactor.Plate
+p2.Size = Vector3.new(1, 2, 1)
+p2.CFrame = CFrame.new(4.59994984, 4.19989109, -11.1000042, 0, 1, 0, 1, 0, 0, 0, 0, -1)
+p2.Anchored = false
+p2.CanCollide = true
+p2.BottomSurface = Enum.SurfaceType.Smooth
+p2.TopSurface = Enum.SurfaceType.Smooth
+b2 = Instance.new("CylinderMesh", p2)
+b2.Name = "Mesh"
+m1.Parent = char
+m1:MakeJoints()
+local prev
+local parts1 = char.Backpack:GetChildren()
+
+for i = 1,#parts1 do 
+	if (parts1[i].className == "Part") or (parts1[i].className == "WedgePart") or (parts1[i].className == "Seat") or (parts1[i].className == "VehicleSeat") or (parts1[i].className == "CornerWedgePart") then 
+		if (prev ~= nil)then 
+			local weld = Instance.new("Weld") 
+			weld.Part0 = prev 
+			weld.Part1 = parts1[i] 
+			weld.C0 = prev.CFrame:inverse() 
+			weld.C1 = parts1[i].CFrame:inverse() 
+			weld.Parent = prev 
+		end 
+		prev = parts1[i] 
+	end 
+end
+weld(char.Backpack.Part, char.Torso, CFrame.new(0,0,-1)*CFrame.Angles(math.rad(0),0,0))
+--------------------
+
+---AmmoPouch---
+
+local m2 = Instance.new("Model")
+m2.Name = "AmmoPouch"
+p1 = Instance.new("Part", m2)
+p1.BrickColor = BrickColor.new("Dark stone grey")
+p1.Material = Enum.Material.Metal
+p1.FormFactor = Enum.FormFactor.Plate
+p1.Size = Vector3.new(1, 0.400000006, 1)
+p1.CFrame = CFrame.new(4.16492414, 2.56973791, -9.53467369, 1, 0, 0, 0, 0, 1, 0, -1, 0)
+p1.BottomSurface = Enum.SurfaceType.Smooth
+p1.TopSurface = Enum.SurfaceType.Smooth
+p1.LeftParamA = 0
+p1.LeftParamB = 0
+p1.RightParamA = 0
+p1.RightParamB = 0
+b1 = Instance.new("SpecialMesh", p1)
+b1.MeshType = Enum.MeshType.Brick
+b1.Name = "Mesh"
+b1.Scale = Vector3.new(0.800000012, 0.5, 0.400000006)
+p2 = Instance.new("Part", m2)
+p2.BrickColor = BrickColor.new("Brown")
+p2.FormFactor = Enum.FormFactor.Plate
+p2.Size = Vector3.new(1, 0.400000006, 1)
+p2.CFrame = CFrame.new(4.15620995, 2.47011304, -9.53478336, 0.999999821, 3.7252903e-009, 2.95694882e-008, 2.95694882e-008, 5.58793545e-009, 0.999999821, -3.7252903e-009, -1, -5.58793545e-009)
+p2.BottomSurface = Enum.SurfaceType.Smooth
+p2.TopSurface = Enum.SurfaceType.Smooth
+p2.LeftParamA = 0
+p2.LeftParamB = 0
+p2.RightParamA = 0
+p2.RightParamB = 0
+b2 = Instance.new("SpecialMesh", p2)
+b2.MeshType = Enum.MeshType.Brick
+b2.Name = "Mesh"
+b2.Scale = Vector3.new(0.5, 0.699999988, 0.400000006)
+p3 = Instance.new("Part", m2)
+p3.BrickColor = BrickColor.new("Brown")
+p3.FormFactor = Enum.FormFactor.Plate
+p3.Size = Vector3.new(1, 0.400000006, 1)
+p3.CFrame = CFrame.new(4.36416483, 2.55231404, -9.53467369, 0.999999881, 5.58793545e-009, 1.961598e-008, 1.97906029e-008, 5.58793545e-009, 0.999999881, 1.11022302e-016, -1, -1.86264504e-009)
+p3.BottomSurface = Enum.SurfaceType.Smooth
+p3.TopSurface = Enum.SurfaceType.Smooth
+p3.LeftParamA = 0
+p3.LeftParamB = 0
+p3.RightParamA = 0
+p3.RightParamB = 0
+b3 = Instance.new("SpecialMesh", p3)
+b3.MeshType = Enum.MeshType.Brick
+b3.Name = "Mesh"
+b3.Scale = Vector3.new(0.800000012, 0.600000024, 0.5)
+w1 = Instance.new("Weld", p1)
+w2 = Instance.new("Weld", p1)
+w3 = Instance.new("Weld", p2)
+w4 = Instance.new("Weld", p2)
+w5 = Instance.new("Weld", p3)
+w6 = Instance.new("Weld", p3)
+m2.Parent = char
+m2:MakeJoints()
+local prev
+local parts1 = char.AmmoPouch:GetChildren()
+
+for i = 1,#parts1 do 
+	if (parts1[i].className == "Part") or (parts1[i].className == "WedgePart") or (parts1[i].className == "Seat") or (parts1[i].className == "VehicleSeat") or (parts1[i].className == "CornerWedgePart") then 
+		if (prev ~= nil)then 
+			local weld = Instance.new("Weld") 
+			weld.Part0 = prev 
+			weld.Part1 = parts1[i] 
+			weld.C0 = prev.CFrame:inverse() 
+			weld.C1 = parts1[i].CFrame:inverse() 
+			weld.Parent = prev 
+		end 
+		prev = parts1[i] 
+	end 
+end
+weld(char.AmmoPouch.Part, char.Torso, CFrame.new(-.50,.54,-.40)*CFrame.Angles(math.rad(270),0,0))
+----------------------------------------
+
+---MP40---
+local m = Instance.new("Model")
+m.Name = "MP40"
+p1 = Instance.new("Part", m)
+p1.BrickColor = BrickColor.new("Dark stone grey")
+p1.Material = Enum.Material.Metal
+p1.FormFactor = Enum.FormFactor.Custom
+p1.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p1.CFrame = CFrame.new(16.7652016, 4.23980618, 13.4252539, 0, 0, 1, -1, 0, 0, 0, -1, 0)
+p1.BottomSurface = Enum.SurfaceType.Smooth
+p1.TopSurface = Enum.SurfaceType.Smooth
+b1 = Instance.new("CylinderMesh", p1)
+b1.Name = "Mesh"
+b1.Scale = Vector3.new(1, 0.5, 0.75)
+p2 = Instance.new("Part", m)
+p2.BrickColor = BrickColor.new("Dark stone grey")
+p2.Material = Enum.Material.Metal
+p2.FormFactor = Enum.FormFactor.Custom
+p2.Size = Vector3.new(0.30361411, 1.44216657, 0.30361408)
+p2.CFrame = CFrame.new(16.006134, 4.00602818, 13.5012341, 0.0832513124, 0.996528745, 0, -0.996528745, 0.0832513124, 0, 0, 0, 1)
+p2.BottomSurface = Enum.SurfaceType.Smooth
+p2.TopSurface = Enum.SurfaceType.Smooth
+b2 = Instance.new("CylinderMesh", p2)
+b2.Name = "Mesh"
+b2.Scale = Vector3.new(0.25, 1, 0.25)
+p3 = Instance.new("Part", m)
+p3.BrickColor = BrickColor.new("Dark stone grey")
+p3.Material = Enum.Material.Metal
+p3.FormFactor = Enum.FormFactor.Custom
+p3.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p3.CFrame = CFrame.new(16.8033848, 4.27775908, 13.4252539, 0, 1, 0, -1, 0, 0, 0, 0, 1)
+p3.BottomSurface = Enum.SurfaceType.Smooth
+p3.TopSurface = Enum.SurfaceType.Smooth
+b3 = Instance.new("SpecialMesh", p3)
+b3.MeshType = Enum.MeshType.Head
+b3.Name = "Mesh"
+b3.Scale = Vector3.new(0.75, 0.5, 1)
+p4 = Instance.new("Part", m)
+p4.BrickColor = BrickColor.new("Dark stone grey")
+p4.Material = Enum.Material.Metal
+p4.FormFactor = Enum.FormFactor.Custom
+p4.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p4.CFrame = CFrame.new(16.8033848, 3.44283009, 13.4252539, 0, -1, 0, 0, 0, 1, -1, 0, 0)
+p4.BottomSurface = Enum.SurfaceType.Smooth
+p4.TopSurface = Enum.SurfaceType.Smooth
+b4 = Instance.new("SpecialMesh", p4)
+b4.MeshType = Enum.MeshType.Wedge
+b4.Name = "Mesh"
+b4.Scale = Vector3.new(0.5, 1, 0.25)
+p5 = Instance.new("Part", m)
+p5.BrickColor = BrickColor.new("Dark stone grey")
+p5.Material = Enum.Material.Metal
+p5.FormFactor = Enum.FormFactor.Custom
+p5.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p5.CFrame = CFrame.new(16.7270355, 3.9741509, 13.4252539, 0, 0, 1, 0, -1, 0, 1, 0, 0)
+p5.BottomSurface = Enum.SurfaceType.Smooth
+p5.TopSurface = Enum.SurfaceType.Smooth
+b5 = Instance.new("SpecialMesh", p5)
+b5.MeshType = Enum.MeshType.Wedge
+b5.Name = "Mesh"
+b5.Scale = Vector3.new(0.5, 0.25, 0.5)
+p6 = Instance.new("Part", m)
+p6.BrickColor = BrickColor.new("Dark stone grey")
+p6.Material = Enum.Material.Metal
+p6.FormFactor = Enum.FormFactor.Custom
+p6.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p6.CFrame = CFrame.new(16.7270355, 4.12595415, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p6.BottomSurface = Enum.SurfaceType.Smooth
+p6.TopSurface = Enum.SurfaceType.Smooth
+b6 = Instance.new("BlockMesh", p6)
+b6.Name = "Mesh"
+b6.Scale = Vector3.new(0.5, 0.75, 0.5)
+p7 = Instance.new("Part", m)
+p7.BrickColor = BrickColor.new("Dark stone grey")
+p7.Material = Enum.Material.Metal
+p7.Name = "Handle"
+p7.FormFactor = Enum.FormFactor.Custom
+p7.Size = Vector3.new(0.30361411, 0.45542106, 0.30361408)
+p7.CFrame = CFrame.new(16.8789787, 3.70848393, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p7.BottomSurface = Enum.SurfaceType.Smooth
+p7.TopSurface = Enum.SurfaceType.Smooth
+b7 = Instance.new("BlockMesh", p7)
+b7.Name = "Mesh"
+b7.Scale = Vector3.new(0.5, 0.99999994, 0.5)
+p8 = Instance.new("Part", m)
+p8.BrickColor = BrickColor.new("Dark stone grey")
+p8.Material = Enum.Material.Metal
+p8.FormFactor = Enum.FormFactor.Custom
+p8.Size = Vector3.new(0.30361411, 0.45542106, 0.30361408)
+p8.CFrame = CFrame.new(16.7270355, 3.70848393, 13.4252539, 0, 0, 1, 0, 1, 0, -1, 0, 0)
+p8.BottomSurface = Enum.SurfaceType.Smooth
+p8.TopSurface = Enum.SurfaceType.Smooth
+b8 = Instance.new("SpecialMesh", p8)
+b8.MeshType = Enum.MeshType.Wedge
+b8.Name = "Mesh"
+b8.Scale = Vector3.new(0.5, 0.99999994, 0.5)
+p9 = Instance.new("Part", m)
+p9.BrickColor = BrickColor.new("Dark stone grey")
+p9.Material = Enum.Material.Metal
+p9.FormFactor = Enum.FormFactor.Custom
+p9.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p9.CFrame = CFrame.new(16.7270355, 4.0880022, 13.4252539, 1, 0, 0, 0, 0, 1, 0, -1, 0)
+p9.BottomSurface = Enum.SurfaceType.Smooth
+p9.TopSurface = Enum.SurfaceType.Smooth
+b9 = Instance.new("CylinderMesh", p9)
+b9.Name = "Mesh"
+b9.Scale = Vector3.new(0.5, 0.75, 0.5)
+p10 = Instance.new("Part", m)
+p10.BrickColor = BrickColor.new("Dark stone grey")
+p10.Material = Enum.Material.Metal
+p10.FormFactor = Enum.FormFactor.Custom
+p10.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p10.CFrame = CFrame.new(16.7729683, 3.93619299, 13.4252539, 0, 0, 1, 0, -1, 0, 1, 0, 0)
+p10.BottomSurface = Enum.SurfaceType.Smooth
+p10.TopSurface = Enum.SurfaceType.Smooth
+b10 = Instance.new("SpecialMesh", p10)
+b10.MeshType = Enum.MeshType.Wedge
+b10.Name = "Mesh"
+b10.Scale = Vector3.new(0.5, 1, 0.5)
+p11 = Instance.new("Part", m)
+p11.BrickColor = BrickColor.new("Dark stone grey")
+p11.Material = Enum.Material.Metal
+p11.FormFactor = Enum.FormFactor.Custom
+p11.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p11.CFrame = CFrame.new(15.2852917, 3.93619299, 13.4252539, 0, 0, -0.999999166, 0.999998868, 0, 0, 0, -0.999998748, 0)
+p11.BottomSurface = Enum.SurfaceType.Smooth
+p11.TopSurface = Enum.SurfaceType.Smooth
+b11 = Instance.new("SpecialMesh", p11)
+b11.MeshId = "http://www.roblox.com/asset/?id=3270017"
+b11.TextureId = ""
+b11.MeshType = Enum.MeshType.FileMesh
+b11.Name = "Mesh"
+b11.Scale = Vector3.new(0.683131754, 0.189758763, 0.45542112)
+p12 = Instance.new("Part", m)
+p12.BrickColor = BrickColor.new("Dark stone grey")
+p12.Material = Enum.Material.Metal
+p12.FormFactor = Enum.FormFactor.Custom
+p12.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p12.CFrame = CFrame.new(17.2674007, 3.83751893, 13.4252539, 0, 0.980619848, -0.195917353, 0, -0.195917353, -0.980619848, -1, 0, 0)
+p12.BottomSurface = Enum.SurfaceType.Smooth
+p12.TopSurface = Enum.SurfaceType.Smooth
+b12 = Instance.new("SpecialMesh", p12)
+b12.MeshType = Enum.MeshType.Wedge
+b12.Name = "Mesh"
+b12.Scale = Vector3.new(0.25, 0.1875, 0.25)
+p13 = Instance.new("Part", m)
+p13.BrickColor = BrickColor.new("Dark stone grey")
+p13.Material = Enum.Material.Metal
+p13.FormFactor = Enum.FormFactor.Custom
+p13.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p13.CFrame = CFrame.new(17.2481251, 3.88913608, 13.4252539, 0, 0.281835884, -0.959462643, 0, -0.959462643, -0.281835884, -1, 0, 0)
+p13.BottomSurface = Enum.SurfaceType.Smooth
+p13.TopSurface = Enum.SurfaceType.Smooth
+b13 = Instance.new("SpecialMesh", p13)
+b13.MeshType = Enum.MeshType.Wedge
+b13.Name = "Mesh"
+b13.Scale = Vector3.new(0.25, 0.5, 0.25)
+p14 = Instance.new("Part", m)
+p14.BrickColor = BrickColor.new("Dark stone grey")
+p14.Material = Enum.Material.Metal
+p14.FormFactor = Enum.FormFactor.Custom
+p14.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p14.CFrame = CFrame.new(17.675827, 4.4295702, 13.4634256, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p14.BottomSurface = Enum.SurfaceType.Smooth
+p14.TopSurface = Enum.SurfaceType.Smooth
+b14 = Instance.new("BlockMesh", p14)
+b14.Name = "Mesh"
+b14.Offset = Vector3.new(0.00625000009, -0.0125000002, 0.0187500007)
+b14.Scale = Vector3.new(0.1875, 0.125, 0.125)
+p15 = Instance.new("Part", m)
+p15.BrickColor = BrickColor.new("Dark stone grey")
+p15.Material = Enum.Material.Metal
+p15.FormFactor = Enum.FormFactor.Custom
+p15.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p15.CFrame = CFrame.new(18.0935135, 4.0880022, 13.4252539, 0, 0, 1, -1, 0, 0, 0, -1, 0)
+p15.BottomSurface = Enum.SurfaceType.Smooth
+p15.TopSurface = Enum.SurfaceType.Smooth
+b15 = Instance.new("CylinderMesh", p15)
+b15.Name = "Mesh"
+b15.Scale = Vector3.new(1, 0.5, 1)
+p16 = Instance.new("Part", m)
+p16.BrickColor = BrickColor.new("Dark stone grey")
+p16.Material = Enum.Material.Metal
+p16.FormFactor = Enum.FormFactor.Custom
+p16.Size = Vector3.new(0.30361411, 0.45542106, 0.30361408)
+p16.CFrame = CFrame.new(17.030941, 3.70848393, 13.4252539, 0, 0, -1, 0, -1, 0, -1, 0, 0)
+p16.BottomSurface = Enum.SurfaceType.Smooth
+p16.TopSurface = Enum.SurfaceType.Smooth
+b16 = Instance.new("SpecialMesh", p16)
+b16.MeshType = Enum.MeshType.Wedge
+b16.Name = "Mesh"
+b16.Scale = Vector3.new(0.5, 0.99999994, 0.5)
+p17 = Instance.new("Part", m)
+p17.BrickColor = BrickColor.new("Dark stone grey")
+p17.Material = Enum.Material.Metal
+p17.FormFactor = Enum.FormFactor.Custom
+p17.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p17.CFrame = CFrame.new(18.5868168, 4.16390419, 13.4252539, 0, 0, -1, 0, -1, 0, -1, 0, 0)
+p17.BottomSurface = Enum.SurfaceType.Smooth
+p17.TopSurface = Enum.SurfaceType.Smooth
+b17 = Instance.new("SpecialMesh", p17)
+b17.MeshType = Enum.MeshType.Wedge
+b17.Name = "Mesh"
+b17.Scale = Vector3.new(0.5, 0.5, 0.25)
+p18 = Instance.new("Part", m)
+p18.BrickColor = BrickColor.new("Dark stone grey")
+p18.Material = Enum.Material.Metal
+p18.FormFactor = Enum.FormFactor.Custom
+p18.Size = Vector3.new(0.30361411, 0.30361405, 1.29035985)
+p18.CFrame = CFrame.new(17.4482613, 4.0880022, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p18.BottomSurface = Enum.SurfaceType.Smooth
+p18.TopSurface = Enum.SurfaceType.Smooth
+b18 = Instance.new("BlockMesh", p18)
+b18.Name = "Mesh"
+b18.Scale = Vector3.new(0.5, 1, 1)
+p19 = Instance.new("Part", m)
+p19.BrickColor = BrickColor.new("Dark stone grey")
+p19.Material = Enum.Material.Metal
+p19.FormFactor = Enum.FormFactor.Custom
+p19.Size = Vector3.new(0.30361411, 0.45542106, 0.30361408)
+p19.CFrame = CFrame.new(18.4348583, 4.01210117, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p19.BottomSurface = Enum.SurfaceType.Smooth
+p19.TopSurface = Enum.SurfaceType.Smooth
+b19 = Instance.new("BlockMesh", p19)
+b19.Name = "Mesh"
+b19.Scale = Vector3.new(0.5, 0.99999994, 0.75)
+p20 = Instance.new("Part", m)
+p20.BrickColor = BrickColor.new("Dark stone grey")
+p20.Material = Enum.Material.Metal
+p20.FormFactor = Enum.FormFactor.Custom
+p20.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p20.CFrame = CFrame.new(18.1694927, 4.16390419, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p20.BottomSurface = Enum.SurfaceType.Smooth
+p20.TopSurface = Enum.SurfaceType.Smooth
+b20 = Instance.new("BlockMesh", p20)
+b20.Name = "Mesh"
+b20.Scale = Vector3.new(0.5, 0.5, 0.5)
+p21 = Instance.new("Part", m)
+p21.BrickColor = BrickColor.new("Dark stone grey")
+p21.Material = Enum.Material.Metal
+p21.FormFactor = Enum.FormFactor.Custom
+p21.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p21.CFrame = CFrame.new(18.359251, 4.0880022, 13.4252539, 0, 0, 1, -1, 0, 0, 0, -1, 0)
+p21.BottomSurface = Enum.SurfaceType.Smooth
+p21.TopSurface = Enum.SurfaceType.Smooth
+b21 = Instance.new("CylinderMesh", p21)
+b21.Name = "Mesh"
+b21.Scale = Vector3.new(1, 0.5, 0.75)
+p22 = Instance.new("Part", m)
+p22.BrickColor = BrickColor.new("Dark stone grey")
+p22.Material = Enum.Material.Metal
+p22.FormFactor = Enum.FormFactor.Custom
+p22.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p22.CFrame = CFrame.new(17.6380196, 4.4295702, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p22.BottomSurface = Enum.SurfaceType.Smooth
+p22.TopSurface = Enum.SurfaceType.Smooth
+b22 = Instance.new("BlockMesh", p22)
+b22.Name = "Mesh"
+b22.Offset = Vector3.new(0, -0.0500000007, 0)
+b22.Scale = Vector3.new(0.5, 0.25, 0.5)
+p23 = Instance.new("Part", m)
+p23.BrickColor = BrickColor.new("Dark stone grey")
+p23.Material = Enum.Material.Metal
+p23.FormFactor = Enum.FormFactor.Custom
+p23.Size = Vector3.new(0.30361411, 2.20120168, 0.30361408)
+p23.CFrame = CFrame.new(17.9037533, 4.27775908, 13.4252539, 0, 1, 0, -1, 0, 0, 0, 0, 1)
+p23.BottomSurface = Enum.SurfaceType.Smooth
+p23.TopSurface = Enum.SurfaceType.Smooth
+b23 = Instance.new("CylinderMesh", p23)
+b23.Name = "Mesh"
+b23.Scale = Vector3.new(0.75, 1, 1)
+p24 = Instance.new("Part", m)
+p24.BrickColor = BrickColor.new("Dark stone grey")
+p24.Material = Enum.Material.Metal
+p24.FormFactor = Enum.FormFactor.Custom
+p24.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p24.CFrame = CFrame.new(18.321455, 3.82234693, 13.4252539, 0, 0, 1, 0, 1, 0, -1, 0, 0)
+p24.BottomSurface = Enum.SurfaceType.Smooth
+p24.TopSurface = Enum.SurfaceType.Smooth
+b24 = Instance.new("SpecialMesh", p24)
+b24.MeshType = Enum.MeshType.Wedge
+b24.Name = "Mesh"
+b24.Scale = Vector3.new(0.5, 0.25, 0.25)
+p25 = Instance.new("Part", m)
+p25.BrickColor = BrickColor.new("Dark stone grey")
+p25.Material = Enum.Material.Metal
+p25.FormFactor = Enum.FormFactor.Custom
+p25.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p25.CFrame = CFrame.new(19.0423069, 4.27775908, 13.4252539, 0, 1, 0, -1, 0, 0, 0, 0, 1)
+p25.BottomSurface = Enum.SurfaceType.Smooth
+p25.TopSurface = Enum.SurfaceType.Smooth
+b25 = Instance.new("CylinderMesh", p25)
+b25.Name = "Mesh"
+b25.Scale = Vector3.new(0.5, 0.25, 0.5)
+p26 = Instance.new("Part", m)
+p26.BrickColor = BrickColor.new("Dark stone grey")
+p26.Material = Enum.Material.Metal
+p26.FormFactor = Enum.FormFactor.Custom
+p26.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p26.CFrame = CFrame.new(17.675827, 4.4295702, 13.387084, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p26.BottomSurface = Enum.SurfaceType.Smooth
+p26.TopSurface = Enum.SurfaceType.Smooth
+b26 = Instance.new("BlockMesh", p26)
+b26.Name = "Mesh"
+b26.Offset = Vector3.new(-0.00625000009, -0.0125000002, 0.0187500007)
+b26.Scale = Vector3.new(0.1875, 0.125, 0.125)
+p27 = Instance.new("Part", m)
+p27.BrickColor = BrickColor.new("Dark stone grey")
+p27.Material = Enum.Material.Metal
+p27.Name = "Magazine"
+p27.FormFactor = Enum.FormFactor.Custom
+p27.Size = Vector3.new(0.30361411, 1.06264901, 0.30361408)
+p27.CFrame = CFrame.new(18.4348583, 3.40487504, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p27.BottomSurface = Enum.SurfaceType.Smooth
+p27.TopSurface = Enum.SurfaceType.Smooth
+b27 = Instance.new("BlockMesh", p27)
+b27.Name = "Mesh"
+b27.Scale = Vector3.new(0.375, 1, 0.625)
+p28 = Instance.new("Part", m)
+p28.BrickColor = BrickColor.new("Dark stone grey")
+p28.Material = Enum.Material.Metal
+p28.FormFactor = Enum.FormFactor.Custom
+p28.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p28.CFrame = CFrame.new(18.5490112, 3.86029696, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p28.BottomSurface = Enum.SurfaceType.Smooth
+p28.TopSurface = Enum.SurfaceType.Smooth
+b28 = Instance.new("SpecialMesh", p28)
+b28.MeshType = Enum.MeshType.Wedge
+b28.Name = "Mesh"
+b28.Scale = Vector3.new(0.5, 0.5, 0.25)
+p29 = Instance.new("Part", m)
+p29.BrickColor = BrickColor.new("Dark stone grey")
+p29.Material = Enum.Material.Metal
+p29.FormFactor = Enum.FormFactor.Custom
+p29.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p29.CFrame = CFrame.new(18.2832718, 4.16390419, 13.4252539, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+p29.BottomSurface = Enum.SurfaceType.Smooth
+p29.TopSurface = Enum.SurfaceType.Smooth
+b29 = Instance.new("BlockMesh", p29)
+b29.Name = "Mesh"
+b29.Scale = Vector3.new(0.5, 0.5, 0.25)
+p30 = Instance.new("Part", m)
+p30.BrickColor = BrickColor.new("Dark stone grey")
+p30.Material = Enum.Material.Metal
+p30.FormFactor = Enum.FormFactor.Custom
+p30.Size = Vector3.new(0.30361411, 0.30361405, 0.30361408)
+p30.CFrame = CFrame.new(17.2585068, 3.89824891, 13.4252539, -0.99999994, 0, 0, 0, -0.99999994, 0, 0, 0, 1)
+p30.BottomSurface = Enum.SurfaceType.Smooth
+p30.TopSurface = Enum.SurfaceType.Smooth
+b30 = Instance.new("SpecialMesh", p30)
+b30.MeshId = "http://www.roblox.com/asset/?id=3270017"
+b30.TextureId = ""
+b30.MeshType = Enum.MeshType.FileMesh
+b30.Name = "Mesh"
+b30.Scale = Vector3.new(0.379517615, 0.30361405, 0.22771056)
+p31 = Instance.new("Part", m)
+p31.BrickColor = BrickColor.new("Dark stone grey")
+p31.Material = Enum.Material.Metal
+p31.Name = "Barrel"
+p31.FormFactor = Enum.FormFactor.Custom
+p31.Size = Vector3.new(0.30361411, 0.986745656, 0.30361408)
+p31.CFrame = CFrame.new(19.57341, 4.27775908, 13.4252539, 0, 1, 0, -1, 0, 0, 0, 0, 1)
+p31.BottomSurface = Enum.SurfaceType.Smooth
+p31.TopSurface = Enum.SurfaceType.Smooth
+b31 = Instance.new("CylinderMesh", p31)
+b31.Name = "Mesh"
+b31.Scale = Vector3.new(0.375, 0.99999994, 0.375)
+d1 = Instance.new("Decal", p31)
+d1.Texture = "http://www.roblox.com/asset/?id=85448092"
+d1.Face = Enum.NormalId.Top
+p32 = Instance.new("Part", m)
+p32.BrickColor = BrickColor.new("Dark stone grey")
+p32.Material = Enum.Material.Metal
+p32.FormFactor = Enum.FormFactor.Custom
+p32.Size = Vector3.new(0.30361411, 1.44216657, 0.30361408)
+p32.CFrame = CFrame.new(16.006134, 4.00602818, 13.3492861, 0.0832513124, 0.996528745, 0, -0.996528745, 0.0832513124, 0, 0, 0, 1)
+p32.BottomSurface = Enum.SurfaceType.Smooth
+p32.TopSurface = Enum.SurfaceType.Smooth
+b32 = Instance.new("CylinderMesh", p32)
+b32.Name = "Mesh"
+b32.Scale = Vector3.new(0.25, 1, 0.25)
+m.Parent = char
+m:MakeJoints()
+local prev
+local parts = char.MP40:GetChildren()
+
+for i = 1,#parts do 
+	if (parts[i].className == "Part") or (parts[i].className == "WedgePart") or (parts[i].className == "Seat") or (parts[i].className == "VehicleSeat") or (parts[i].className == "CornerWedgePart") then 
+		if (prev ~= nil)then 
+			local weld = Instance.new("Weld") 
+			weld.Part0 = prev 
+			weld.Part1 = parts[i] 
+			weld.C0 = prev.CFrame:inverse() 
+			weld.C1 = parts[i].CFrame:inverse() 
+			weld.Parent = prev 
+		end 
+		prev = parts[i] 
+	end 
+end
+char.MP40.Handle.Weld.Name = "Weld2"
+
+
+weld(char.MP40.Handle, char.Torso, CFrame.new(1.6,0,-.80)*CFrame.Angles(math.rad(0),29.8,0))
+--------------------------------------
+
+---Taunts/German
+local t1=Instance.new("Sound",char.Head)
+	t1.SoundId="http://www.roblox.com/asset/?id=176893156"
+	t1.PlayOnRemove=false
+	t1.Volume=1
+	t1.Looped=false
+	t1.Pitch = 1
+	t1.Parent=char.Head
+	local t2=Instance.new("Sound",char.Head)
+	t2.SoundId="http://www.roblox.com/asset/?id=176893156"
+	t2.PlayOnRemove=false
+	t2.Volume=1
+	t2.Looped=false
+	t2.Pitch = 1
+	t2.Parent=char.Head
+	local t3=Instance.new("Sound",char.Head)
+	t3.SoundId="http://www.roblox.com/asset/?id=156508971"
+	t3.PlayOnRemove=false
+	t3.Volume=1
+	t3.Looped=false
+	t3.Pitch = 1
+	t3.Parent=char.Head
+	local t4=Instance.new("Sound",char.Head)
+	t4.SoundId="http://www.roblox.com/asset/?id=156508971"
+	t4.PlayOnRemove=false
+	t4.Volume=1
+	t4.Looped=false
+	t4.Pitch = 1
+	t4.Parent=char.Head
+mouse.KeyDown:connect(function(key)
+if key == "t" then
+	tpressed = true
+	wait(4)
+	tpressed = false
+end
+	end)
+	
+	mouse.KeyDown:connect(function(key)
+if key == "t"  and tpressed == false then
+	tpressed2 = tpressed2 + 1
+	if tpressed2 == 1 then
+	t1:Play()
+	wait(3.44)
+	t1:Stop()
+	print(tpressed2)
+	end
+	if tpressed2 == 2 then
+	    t2.Parent = game.Lighting
+	    wait()
+		t2.TimePosition = 3.44
+        wait()
+		t2.Parent = char.Head
+		t2:Play()
+	wait(2.60)
+	t2:Stop()
+	print(tpressed2)
+	end
+	if tpressed2 == 3 then
+	    t3.Parent = game.Lighting
+	    wait()
+		t3.TimePosition = 1.60
+		wait()
+		t3.Parent = char.Head
+		t3:Play()
+	wait(1.76)
+	t3:Stop()
+	print(tpressed2)
+	end
+	if tpressed2 == 4 then
+		t4.Parent = game.Lighting
+		wait()
+		t4.TimePosition = 4.70
+		wait()
+		t4.Parent = char.Head
+		t4:Play()
+	wait(3.20)
+	t4:Stop()
+	print(tpressed2)
+	end
+	if tpressed2 == 5 then
+		tpressed2 = 0
+		t1:Stop()
+		t2:Stop()
+		t3:Stop()
+		t4:Stop()
+		print(tpressed2)
+	end
+end
+	end)
+	
+	--MP40--
+local Barrel2 = Instance.new("Part",char.MP40)
+Barrel2.Size = Vector3.new(0.6, 0.6, 0.6)
+Barrel2.formFactor = "Custom"
+Barrel2.Locked = true
+Barrel2.Name = "Barrel2"
+Barrel2.Anchored = false
+Barrel2.CanCollide = false
+Barrel2.Transparency = 1
+Barrel2:BreakJoints()
+
+weld(Barrel2, char.MP40.Barrel, CFrame.new(0,-.55,0))
+
+local guiMain = Instance.new("BillboardGui",Barrel2)
+guiMain.AlwaysOnTop = false
+guiMain.Size = UDim2.new(1.3, 0,1.3, 0)
+guiMain.Name = "guiMain"
+local SD = Instance.new("ImageLabel")
+SD.Position = UDim2.new(0,0,0)
+SD.Size = UDim2.new(1,0,1,0)
+SD.Parent = guiMain;
+SD.BackgroundColor3 = Color3.new(255/255,255/255,255/255)
+SD.BorderColor3 = Color3.new(27/255,42/255,53/255)
+SD.BackgroundTransparency = 1
+SD.BorderSizePixel = 1
+SD.Image = "http://www.roblox.com/asset/?id=156580315"
+SD.Visible = false
+SD.Name = "SD"
+local light = Instance.new("PointLight",Barrel2)
+light.Brightness = 2.5
+light.Color = Color3.new(255/255,183/255,0/255)
+light.Range = 5
+light.Enabled = false
+light.Name = "Light"
+	
+	mouse.KeyDown:connect(function(key)
+if key == "e" then
+	epressed = true
+	wait(2.4)
+	epressed = false
+end
+	end)
+	
+	mouse.KeyDown:connect(function(key)
+if key == "e"  and tpressed == false then
+	epressed2 = epressed2 + 1
+	if epressed2 == 1 then
+	   	if ra:FindFirstChild("Weld") then ra.Weld:Destroy() end
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(10),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.15)*CFrame.Angles(math.rad(15),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.20)*CFrame.Angles(math.rad(20),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.25)*CFrame.Angles(math.rad(25),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.30)*CFrame.Angles(math.rad(30),.10,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.35)*CFrame.Angles(math.rad(35),.20,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.40)*CFrame.Angles(math.rad(40),.30,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.45)*CFrame.Angles(math.rad(40),.40,0))
+		char.MP40.Handle.Weld:Destroy()
+		weld(char.MP40.Handle, char["Right Arm"], CFrame.new(0,.50,0)*CFrame.Angles(math.rad(0),29.8,0))
+		wait(.03)
+		char.MP40.Handle.Weld:Destroy()
+		weld(char.MP40.Handle, char["Right Arm"], CFrame.new(0,1,0)*CFrame.Angles(math.rad(0),29.8,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.40)*CFrame.Angles(math.rad(40),.30,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.35)*CFrame.Angles(math.rad(35),.20,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.30)*CFrame.Angles(math.rad(30),.10,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.25)*CFrame.Angles(math.rad(25),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.20)*CFrame.Angles(math.rad(20),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.15)*CFrame.Angles(math.rad(15),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(10),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(-5),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(-10),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(-15),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(-20),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,-.10)*CFrame.Angles(math.rad(-25),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,0,.5)*CFrame.Angles(math.rad(-30),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.10,.10)*CFrame.Angles(math.rad(-35),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.20,.20)*CFrame.Angles(math.rad(-40),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.30,.30)*CFrame.Angles(math.rad(-45),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.40,.40)*CFrame.Angles(math.rad(-50),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.50,.50)*CFrame.Angles(math.rad(-55),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-60),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-65),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-70),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-75),0,0))
+		char.MP40.Handle.Weld:Destroy()
+		weld(char.MP40.Handle, char["Right Arm"], CFrame.new(0,-.10,-.20)*CFrame.Angles(math.rad(90),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-80),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.55,.50)*CFrame.Angles(math.rad(-85),0,0))
+		wait(.03)
+		ra.Weld:Destroy()
+		weld(ra, tor, CFrame.new(-1.5,.60,.25)*CFrame.Angles(math.rad(-90),0,0))
+		wait(.03)
+		if la:FindFirstChild("Weld") then la.Weld:Destroy() end
+			weld(la, tor, CFrame.new(-1,0,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.08)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(-.80,.50,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.08)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(-.60,.50,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.08)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(-.40,.50,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.08)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(-.20,.50,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.03)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(-.10,.80,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.03)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(.05,1.10,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.03)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(.05,1.20,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.03)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(.05,1.30,-.10)*CFrame.Angles(math.rad(90),10,0))
+			wait(.03)
+			la.Weld:Destroy()
+			weld(la, tor, CFrame.new(.10,1.3,-.10)*CFrame.Angles(math.rad(90),10,0))
+			canfire = true
+	end
+	if epressed2 == 2 then
+	    epressed2 = 0
+	end
+	end
+	end)
+
+
+function computeDirection(pos)
+	local invrtDir = 1 / math.sqrt((pos.magnitude * pos.magnitude))
+	local dir = Vector3.new(pos.x * invrtDir, pos.y * invrtDir, pos.z * invrtDir)
+	return dir
+end
+
+local bullet = Instance.new("Part")
+bullet.Name = "Bullet"
+bullet.Shape = 0
+bullet.BrickColor = BrickColor.new(103)
+bullet.FormFactor = "Custom"
+bullet.Size = Vector3.new(0.32, 0.33, 0.45)
+bullet.Locked = true
+local mesh = Instance.new("SpecialMesh",bullet)
+mesh.MeshType="FileMesh"
+mesh.MeshId = "http://www.roblox.com/asset?id=123881156"
+mesh.TextureId = "http://www.roblox.com/asset?id=123881235"
+mesh.VertexColor = Vector3.new(1, 1, 1)
+mesh.Scale = Vector3.new(0.5, 0.5, 1.1)
+
+function fire()
+
+local cam_rot = camera.CoordinateFrame - camera.CoordinateFrame.p
+local cam_scroll = (camera.CoordinateFrame.p - camera.Focus.p).magnitude
+local ncf = CFrame.new(camera.Focus.p)*cam_rot*CFrame.fromEulerAnglesXYZ(0.0025+math.random()/100, math.random(-10,10)/1000, 0)
+camera.CoordinateFrame = ncf*CFrame.new(10, 50, cam_scroll)
+local gun=Instance.new("Sound",char.MP40.Handle)
+game:service'Debris':AddItem(gun,.2)
+gun.SoundId="rbxassetid://132456050"
+gun.Volume=2
+gun:play()
+
+local b = bullet:Clone()
+			b.Parent = workspace
+			b.CanCollide = true
+			b.Name = "Bullet"
+			game.Debris:AddItem(b,4)
+			local target = mouse.Hit.p - char.MP40.Barrel.Position
+			local dir = computeDirection(target)
+			local pos = char.MP40.Barrel.Position + (dir * 2)
+			local bcframe = CFrame.new(pos, pos + dir)
+			local foirc = bcframe * CFrame.fromEulerAnglesXYZ(math.random(0,60) / 500, math.random(-5,10) / 100, 100) -- Lower values here will make it more accurate; higher, less accurate
+			b.CFrame = foirc
+			local bv = Instance.new("BodyVelocity")
+			bv.maxForce = Vector3.new(math.huge,math.huge,math.huge)
+			bv.velocity = foirc.lookVector * math.random(153, 200) -- Change this if you want the bullet to go faster or slower
+			bv.Parent = b
+b.Touched:connect(function(hit)
+if hit and hit.Parent:FindFirstChild("Humanoid") then
+local isPlayer = hit.Parent:FindFirstChild("Humanoid")
+isPlayer:TakeDamage(math.random(6,14))
+b:Destroy()
+if isPlayer.Parent:FindFirstChild("ForceField") then isPlayer.Parent.ForceField:Destroy() b:Destroy() end
+end
+if hit and hit.Parent and hit.Parent.Parent and hit.Parent.Parent:FindFirstChild("Humanoid") then
+local isPlayer = hit.Parent.Parent:FindFirstChild("Humanoid")
+isPlayer:TakeDamage(math.random(6,14))
+b:Destroy()
+if isPlayer.Parent:FindFirstChild("ForceField") then isPlayer.Parent.ForceField:Destroy() end
+end
+if hit.Parent:FindFirstChild("Humanoid") == nil then
+local p = Instance.new("Part")
+p.formFactor = "Custom"
+p.Size = Vector3.new(0.5,0.5,0.5)
+p.Transparency = 1
+p.CanCollide = false
+p.Locked = true
+p.CFrame = hit.CFrame+(b.Position-hit.Position)
+local w = Instance.new("Weld")
+w.Part0 = mouse.Target
+w.Part1 = p
+w.C0 = mouse.Target.CFrame:inverse()
+w.C1 = p.CFrame:inverse()
+w.Parent = p
+local d = Instance.new("Decal")
+d.Parent = p
+d.Face = mouse.TargetSurface
+d.Texture = "http://www.roblox.com/asset/?id=2078626"
+p.Parent = game.Workspace
+game.Debris:AddItem(p,10)
+	b:Destroy()
+end
+end)
+end
+function fire2()
+	if la:FindFirstChild("Weld") then la.Weld:Destroy() end
+		if ra:FindFirstChild("Weld") then ra.Weld:Destroy() end
+		weld(la, tor, CFrame.new(.10,.95,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.55,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.Visible = true
+		light.Enabled = true
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.90,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.50,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .10
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.85,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.45,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .20
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.80,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.40,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .30
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.85,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.45,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .40
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.90,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.50,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .50
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,.95,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.55,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .60
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,1,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.55,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .70
+		wait()
+		ra.Weld:Destroy()
+		la.Weld:Destroy()
+		weld(la, tor, CFrame.new(.10,1.3,-.10)*CFrame.Angles(math.rad(90),10,0))
+		weld(ra, tor, CFrame.new(-1.5,.60,.25)*CFrame.Angles(math.rad(-90),0,0))
+		SD.ImageTransparency = .80
+		light.Enabled = false
+		SD.Visible = false
+end
+
+
+
+mouse.Button1Down:connect(function()
+	if Ammo>=0 and canfire == true and firin == true then
+		pcall(function()
+			while firin == true do
+				wait()
+				fire2()
+			end
+		end)
+	end
+end)
+
+mouse.Button1Down:connect(function()
+	if Ammo >= 0 and canfire == true then
+		firin = true
+		pcall(function()
+		while firin == true do
+			wait(.16)
+fire()
+Ammo = Ammo - 1
+		end		end)
+
+	end
+	
+end)
+
+mouse.Button1Up:connect(function()
+		firin = false
+end)
