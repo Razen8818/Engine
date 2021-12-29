@@ -10,7 +10,7 @@ local tab3 = main:CreateTab('.')
 local tab4 = main:CreateTab('.')
 
 --creating buttons in your cool tabs
-tab1:CreateButton('Parametry',function()
+tab2:CreateButton('Parametry',function()
    print'Parametry tab1'
 end)
 tab2:CreateButton('cool text',function()
@@ -21,22 +21,24 @@ tab3:CreateButton('very cool text',function()
 end)
 
 --creating toggles
-tab1:CreateToggle('safe tp',function(state)
+tab1:CreateToggle('test',function(state)
    print(state) 
 end)
 
+tab1:CreateLabel('Parametry')
+
 --creating one slider but im lazy
-tab1:CreateSlider('Szybkość',0,100, game:GetService('Players').LocalPlayer.Character.Humanoid.WalkSpeed ,1,function(slide) --arg 1 name | arg 2 and arg 3 its min and max | arg 4 defoult | arg 5 how much slide :)
+tab1:CreateSlider('Szybkość',0,200, game:GetService('Players').LocalPlayer.Character.Humanoid.WalkSpeed ,1,function(slide) --arg 1 name | arg 2 and arg 3 its min and max | arg 4 defoult | arg 5 how much slide :)
     game:GetService('Players').LocalPlayer.Character.Humanoid.WalkSpeed = slide
     print(slide)
 end)
-tab1:CreateSlider('Siła Skoku',0,100, game:GetService('Players').LocalPlayer.Character.Humanoid.JumpPower ,1,function(slide)
+tab1:CreateSlider('Siła Skoku',0,200, game:GetService('Players').LocalPlayer.Character.Humanoid.JumpPower ,1,function(slide)
     game:GetService('Players').LocalPlayer.Character.Humanoid.JumpPower = slide
     print(slide)
 end)
 
 --creating not cool label
-tab3:CreateLabel('boring text😕')
+tab2:CreateLabel('Parametry')
 
 --creating cool binds 😎
 tab3:CreateBind('jump if dont have space', 'F', function(status) --binds semi broke :(
