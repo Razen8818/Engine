@@ -104,7 +104,7 @@ local function Drag(drag, frame)
 end
 
 function lib:CreateMain(gametitle)
-  local UIBack = Instance.new("Frame")
+        local UIBack = Instance.new("Frame")
 	local UIBackCorner = Instance.new("UICorner")
 	local TitleTexts = Instance.new("Frame")
 	local Dash = Instance.new("TextLabel")
@@ -113,7 +113,24 @@ function lib:CreateMain(gametitle)
 	local AllTabBtnsListing = Instance.new("UIListLayout")
 	local AllPages = Instance.new("Frame")
 	local DragObject = Instance.new("Frame")
+	local Exit = Instance.new("ImageButton")
 	Drag(DragObject, UIBack)
+	
+	Exit.Name = "Exit"
+	Exit.Parent = UIBack
+	Exit.AnchorPoint = Vector2.new(0.5, 0.5)
+	Exit.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+	Exit.BackgroundTransparency = 1.000
+	Exit.Position = UDim2.new(0.959910929, 0, 0.0595120713, 0)
+	Exit.Size = UDim2.new(0, 20, 0, 20)
+	Exit.Image = "http://www.roblox.com/asset/?id=6031094678"
+	Exit.ImageColor3 = Color3.fromRGB(34, 42, 56)
+	Exit.MouseButton1Click:Connect(function()
+		RazenHub:Destroy()
+	end)
+	
+	RazenHub.Parent = game.CoreGui
+	RazenHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
   
   UIBack.Name = "UIBack"
 	UIBack.Parent = RazenHub
