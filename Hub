@@ -5,7 +5,7 @@ local main = lib:CreateMain('RazenHub')
 
 --creating tabs in menu
 local tab1 = main:CreateTab('1. Postać')
-local tab2 = main:CreateTab('.')
+local tab2 = main:CreateTab('2. Inne')
 local tab3 = main:CreateTab('.')
 local tab4 = main:CreateTab('.')
 
@@ -21,8 +21,17 @@ tab3:CreateButton('very cool text',function()
 end)
 
 --creating toggles
-tab1:CreateToggle('test',function(state)
-   print(state) 
+tab1:CreateToggle('Noclip',function(state)
+   print(state)
+   noclip = false
+game:GetService('RunService').Stepped:connect(function()
+if noclip then
+game.Players.LocalPlayer.Character.Humanoid:ChangeState(11)
+end
+end)
+plr = game.Players.LocalPlayer
+mouse = plr:GetMouse()
+mouse.KeyDown:connect(function(key)
 end)
 
 tab1:CreateLabel('Parametry')
