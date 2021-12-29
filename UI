@@ -107,8 +107,6 @@ function lib:CreateMain(gametitle)
   local UIBack = Instance.new("Frame")
 	local UIBackCorner = Instance.new("UICorner")
 	local TitleTexts = Instance.new("Frame")
-	local SIUM = Instance.new("TextLabel")
-	local ELY = Instance.new("TextLabel")
 	local Dash = Instance.new("TextLabel")
 	local GameText = Instance.new("TextLabel")
 	local AllTabBtns = Instance.new("Frame")
@@ -133,28 +131,6 @@ function lib:CreateMain(gametitle)
 	TitleTexts.BackgroundTransparency = 1.000
 	TitleTexts.Position = UDim2.new(0.0244988855, 0, 0.0281690136, 0)
 	TitleTexts.Size = UDim2.new(0, 238, 0, 19)
-
-	SIUM.Name = "SIUM"
-	SIUM.Parent = TitleTexts
-	SIUM.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	SIUM.BackgroundTransparency = 1.000
-	SIUM.Position = UDim2.new(0.111564457, 0, -0.0244625658, 0)
-	SIUM.Size = UDim2.new(0, 36, 0, 19)
-	SIUM.Font = Enum.Font.GothamSemibold
-	SIUM.Text = "SIUM"
-	SIUM.TextColor3 = Color3.fromRGB(222, 39, 239)
-	SIUM.TextSize = 15.000
-
-	ELY.Name = "ELY"
-	ELY.Parent = TitleTexts
-	ELY.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-	ELY.BackgroundTransparency = 1.000
-	ELY.Position = UDim2.new(0.00349054416, 0, -0.0244622473, 0)
-	ELY.Size = UDim2.new(0, 26, 0, 19)
-	ELY.Font = Enum.Font.GothamSemibold
-	ELY.Text = "ELY"
-	ELY.TextColor3 = Color3.fromRGB(245, 245, 245)
-	ELY.TextSize = 15.000
 
 	Dash.Name = "Dash"
 	Dash.Parent = TitleTexts
